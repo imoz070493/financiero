@@ -1,0 +1,174 @@
+
+    <center>
+        <table border=0 class="ventanas" width="650" cellspacing="0" cellpadding="0">
+            <tr>
+                <td height='10' class='tabla_ventanas_login' height='10' colspan='3'><legend align='center'>.: Nuevo Usuario :.</legend></td>
+            </tr>
+            <tr>
+                <td colspan=3>
+                <?php $attributes = array("class" => "form-horizontal", "id" => "form", "name" => "form");
+                      //echo form_open("clientes/Save", $attributes);
+                        echo form_open();
+                 ?>
+                    
+                <center>
+                    <table border=0>
+                    <?php
+
+                        // Creando los campos del formulario:
+
+                        // Dibujando el campo nombre
+                        $nombre 	  = array(
+                        'name'        => 'nombre',
+                        'id'          => 'nombre',
+                        'size'        => 50,
+                        'value'       => set_value('nombre',@$datos_usuarios[0]->NOMBRE),
+                        'placeholder' => 'Nombre',
+                        'type'        => 'text',
+                        );
+
+                        // Dibujando el campo apellidos
+                        $apellidos = array(
+                        'name'        => 'apellidos',
+                        'id'          => 'apellidos',
+                        'size'        => 50,
+                        'value'       => set_value('apellidos',@$datos_usuarios[0]->APELLIDOS),
+                        'placeholder' => 'Apellidos',
+                        'type'        => 'text',
+                        );
+
+                        // Dibujando el campo correo electronico
+                        $email 		  = array(
+                        'name'        => 'email',
+                        'id'          => 'email',
+                        'size'        => 50,
+                        'value'	  => set_value('email',@$datos_usuarios[0]->EMAIL),
+                        'placeholder' => 'Email',
+                        'type'        => 'text',
+                        );
+                        
+                        // Dibujando el campo telefono
+                        $telefono       = array(
+                        'name'        => 'telefono',
+                        'id'          => 'telefono',
+                        'size'        => 10,
+                        'value'	  => set_value('telefono',@$datos_usuarios[0]->TELEFONO),
+                        'placeholder' => 'Telefono',
+                        'type'        => 'text',
+                        );
+                        
+                        $fechaEgreso = array(
+                        'name'        => 'fecha_egreso',
+                        'id'          => 'fecha_egreso',
+                        'size'        => 10,
+                        'value'	  => set_value('fecha_egreso',@$datos_usuarios[0]->FECHA_EGRESO),
+                        'type'        => 'date',
+                        );
+                        
+                        
+                        
+                        // Dibujando el campo sexo
+                        $campoOpcionesSexo = array(
+                        'NONE'             => '---SELECCIONE SEXO---',
+                        '0'     => 'Masculino',
+                        '1'	=> 'Femenino',
+                        );
+                        
+                        // Dibujando el campo tipo de usuario
+                        $campoOpcionesTipo = array(
+                        '0'                 => '---SELECCIONE TIPO DE USUARIO---',
+                        'Administrador'     => 'Administrador',
+                        'Invitado'	    => 'Invitado',
+                        );
+
+                        // Dibujando el campo estado
+                        $estatus = array(
+                        'NONE'   => '---SELECCIONE ESTATUS---',
+                        '0'	 => 'Activo',
+                        '1'      => 'Inactivo',
+                        );
+
+                    ?>                    
+                        
+                    <tr>
+                        <td> <?php echo form_label("Nombre:",'nombre'); ?></td>
+                        <td> <?php  echo form_input($nombre); ?></td>
+                        <td><font color="red"><?php echo form_error('nombre');?></font></td>
+                    </tr>
+
+                    <tr>
+                        <td><?php echo form_label("Apellidos:",'apellidos');?></td>
+                        <td><?php echo form_input($apellidos);?></td>
+                        <td><font color="red"><?php echo form_error('apellidos');?></font></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><?php echo form_label("Email:",'email');?></td>
+                        <td><?php echo form_input($email);?></td>
+                        <td><font color="red"><?php echo form_error('email'); ?></font></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><?php echo form_label("Telefono:",'telefono');?></td>
+                        <td><?php echo form_input($telefono);?></td>
+                        <td><font color="red"><?php echo form_error('telefono'); ?></font></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><?php echo form_label("Carrera Profesional:",'profesion');?></td>
+                        <td>
+                            <select  name="id_carrera">
+                                <option value="0">--SELECIONE CARRERA--</option>
+                            <?php   foreach ($string as  $carrera){?>
+                                <option value="<?php echo  $carrera->ID;?>"> <?php echo $carrera->NOMBRE;?></option>';
+                            <?php }?>
+                        </td>
+                        </select>
+                    </tr> 
+                    
+                    <tr>
+                        <td><?php echo form_label("Fecha Egreso:",'fecha_egreso');?></td>
+                        <td><?php echo form_input($fechaEgreso);?></td>
+                        <td><font color="red"><?php echo  form_error('fecha_egreso');?></font></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><?php echo form_label("Sexo:",'sexo');?></td>
+                        <td><?php echo  form_dropdown('sexo', $campoOpcionesSexo, set_value('sexo',@$datos_usuarios[0]->SEXO));?></td>
+                        <td><font color="red"><?php echo  form_error('sexo');?></font></td>
+                    </tr>
+                    
+                    
+                    
+                    <tr>
+                        <td><?php echo form_label("Tipo:",'tipo');?></td>
+                        <td><?php echo  form_dropdown('tipo', $campoOpcionesTipo, set_value('tipo',@$datos_usuarios[0]->TIPO));?></td>
+                        <td><font color="red"><?php echo  form_error('tipo');?></font></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><?php echo form_label("Estatus:",'estatus');?></td>
+                        <td><?php echo  form_dropdown('estatus', $estatus, set_value('estatus',@$datos_usuarios[0]->ESTATUS));?></td>
+                        <td><font color="red"><?php echo form_error('estatus');?></font></td>
+                    </tr>    
+                    
+                    <tr>
+                        <td colspan=3><?php echo $this->session->flashdata('msg');?></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan=3><hr/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan=3><center> <input type="submit" class="btn btn-success" value="Guardar"></center></td>
+                    </tr>
+                    
+                    </table>
+                    
+                </center>
+                <?php echo form_close();?> 
+                </td>
+            </tr>
+        </table>
+    </center>

@@ -1,0 +1,67 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+date_default_timezone_set('America/Lima'); 
+class exportar extends CI_Controller{
+    public function __construct(){
+          parent::__construct();
+        $this->load->database();
+        $this->load->model('model_usuarios');
+          
+    }
+    function toExcel_preguntaUno(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+        $this->load->view('reporteExcel_pregunataUno', $dato);
+    }
+    function toWord_preguntaUno(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero(); 
+        $this->load->view('reporteWord_pregunataUno', $dato);
+    }
+    function toExcel_preguntaDos(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+        $this->load->view('reporteExcel_pregunataDos', $dato);
+    }
+    function toWord_preguntaDos(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero(); 
+        $this->load->view('reporteWord_pregunataDos', $dato);
+    }
+    function toExcel_preguntaTres(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+        $this->load->view('reporteExcel_pregunataTres', $dato);
+    }
+    function toWord_preguntaTres(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero(); 
+        $this->load->view('reporteWord_pregunataTres', $dato);
+    }
+    function toExcel_preguntaCuatro(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+        $this->load->view('reporteExcel_pregunataCuatro', $dato);
+    }
+    function toWord_preguntaCuatro(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero(); 
+        $this->load->view('reporteWord_pregunataCuatro', $dato);
+    }
+    function toExcel_preguntaCinco(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+        $this->load->view('reporteExcel_pregunataCinco', $dato);
+    }
+    function toWord_preguntaCinco(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero(); 
+        $this->load->view('reporteWord_pregunataCinco', $dato);
+    }
+    function toExcel_reporteGenero(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+        $this->load->view('reporteExcel_reporteGenero', $dato);
+    }
+    function toWord_reporteGenero(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero(); 
+        $this->load->view('reporteWord_reporteGenero', $dato);
+    }
+    function toExcel_reportePregunta(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+        $this->load->view('reporteExcel_reportePregunta', $dato);
+    }
+    function toWord_reportePregunta(){
+        $dato['datos'] = $this->model_usuarios->getCantidadGenero(); 
+        $this->load->view('reporteWord_reportePregunta', $dato);
+    }
+
+}

@@ -1,0 +1,86 @@
+<script>
+                function generar_reporte_excel(){
+                document.getElementById("frmExcel").submit();
+                }
+                function generar_reporte_word(){
+                document.getElementById("frmWord").submit();
+                }
+</script>
+<script type="text/javascript">
+            /*CLIENTES*/
+            $(document).ready(function() {
+                $('#usuarios').dataTable( {
+                    // sDom: hace un espacio entre la tabla y los controles 
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+        
+                } );
+            } );
+</script>
+<br>
+<div id="container">
+<table id="usuarios" border="0" cellpadding="0" cellspacing="0" class="pretty">
+            <thead>
+                <tr>
+                    <td colspan="3"><a href="<?php echo base_url();?>index.php/exportar/toExcel_reportePregunta" onclick="generar_reporte_excel();" class="btn btn-success" title="Exportar a Excel" >Exportar a Excel</a></td>
+                    <td colspan="3"><a href="<?php echo base_url();?>index.php/exportar/toWord_reportePregunta" onclick="generar_reporte_word();" class="btn btn-primary" title="Exportar a Word" >Exportar a Word</a></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>N°</th>
+                    <th>Egresado</th>
+                    <th>Carrera Profesional</th>
+                    <th>Actividad Laboral Actual</th>
+                    <th>¿Como considera conocimientos y competencias adquiridos en su formacion de grado con respecto en relacion con su desempeño profesional?</th>
+                    <th>¿Estima que los conocimientos, las aptitudes pedagogicas y la metodologia empleada por los docentes con los que curso la carrera fueron suficientes y adecuados?</th>
+                    <th>¿Habitualmente se le informa sobre las actividades de perfeccionamiento, de actualizacion de conocimientos y capacitacion que organiza la unidad academica en la que se graduo?</th>
+                    <th>¿Considera los conocimientos con los que concluyo la carrera de grado le facilitaron encontrar trabajo?</th>
+                    <th>¿Por qué?</th>
+                    <th>Correo Electronico</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th><a href="<?php echo base_url();?>index.php/encuesta/reportePreguntaUno/" class="btn btn-success">Pregunt1</a></th>
+                    <th><a href="<?php echo base_url();?>index.php/encuesta/reportePreguntaDos/" class="btn btn-success">Pregunta 2</a></th>
+                    <th><a href="<?php echo base_url();?>index.php/encuesta/reportePreguntaTres/" class="btn btn-success">Pregunta 3</a></th>
+                    <th><a href="<?php echo base_url();?>index.php/encuesta/reportePreguntaCuatro/" class="btn btn-success">Pregunta 4</a></th>
+                    <th><a href="<?php echo base_url();?>index.php/encuesta/reportePreguntaCinco/" class="btn btn-success">Pregunta 5</a></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            
+           
+            
+            <tbody> 
+                <tr>
+               <?php 
+               if(!empty($datos)){
+                      $I=0;
+                      foreach($datos as $dato)
+                      {
+                        $I=$I+1;
+                        echo '<tr>';
+                        echo '<td>'.$I.'</td>';
+                        echo '<td>'.$dato->NOMBRE.' '.$dato->APELLIDOS.'</td>';
+                        echo '<td>'.$dato->NOMBREC.'</td>';
+                        echo '<td>'.$dato->ACTIVIDAD_LABORAL.'</td>';
+                        echo '<td>'.$dato->GRADO_FORMACION.'</td>';
+                        echo '<td>'.$dato->METODO_DOCENTE.'</td>';
+                        echo '<td>'.$dato->ACTIVIDAD_ACADEMICA.'</td>';
+                        echo '<td>'.$dato->GRADO_TRABAJO.'</td>';
+                        echo '<td>'.$dato->JUSTIFICACION.'</td>';
+                        echo '<td>'.$dato->CORREO_ELECTRONICO.'</td>';
+                        echo '</tr>';
+                      } 
+               }
+               ?> 
+                </tr>
+            </tbody>
+            
+            
+        </table>  
+    </center>
+</div>

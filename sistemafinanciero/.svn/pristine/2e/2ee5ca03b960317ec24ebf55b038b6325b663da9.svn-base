@@ -1,0 +1,105 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php
+    $tipo = isset($_REQUEST['t']) ? $_REQUEST['t'] : 'excel';
+    $extension = $tipo == 'excel' ? '.xls' : '.doc';
+
+header("Content-type: application/vnd.ms-$tipo");
+header("Content-Disposition: attachment; filename=mi_archivo$extension");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+?>
+
+<div border="1" class="ventanas" width="650" cellspacing="0" cellpadding="0">
+<table  border="1" cellpadding="0" cellspacing="0" class="pretty">
+            <thead>
+            <tr>
+                 <td colspan='4'><h1>1. Señalar que actividad laboral realiza actualmente</h1></td>
+            </tr> 
+
+            <tr>
+                <th style="background-color:lightskyblue;">N°</th>
+                <th style="background-color:lightskyblue;">RESPUESTAS MARCADAS</th>
+                <th style="background-color:lightskyblue;">CANTIDAD</th>
+                <th style="background-color:lightskyblue;">PORCENTAJE</th>
+            </tr>
+            </thead>
+<?php
+if(!empty($datos)){
+                      $I=0;
+                      $APE=0;
+                      $AA=0;
+                      $OA=0;
+                      $APNE=0;
+                      $AG=0;
+                      $D=0;
+                      $N= count($datos);
+                      foreach($datos as $dato)
+                      {
+                        $I=$I+1;
+                        if($dato->ACTIVIDAD_LABORAL=="Actividad profesional especifica"){
+                            $APE=$APE+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Actividad academica"){
+                            $AA=$AA+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Otra actividad"){
+                            $OA=$OA+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Actividad profesional no especifica"){
+                            $APNE=$APNE+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Actividad gerencial"){
+                            $AG=$AG+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Desocupado"){
+                            $D=$D+1;
+                        }
+                      } 
+               }
+            ?>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Actividad profesional especifica</td>
+                    <td><?php echo $APE;?></td>
+                    <td><?php $PAPE=round($APE*100/$N,2); echo $PAPE;?></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Actividad academica</td>
+                    <td><?php echo $AA;?></td>
+                    <td><?php $PAA=round($AA*100/$N,2); echo $PAA;?></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Otra actividad</td>
+                    <td><?php echo $OA;?></td>
+                    <td><?php $POA=round($OA*100/$N,2); echo $POA;?></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Actividad profesional no especifica</td>
+                    <td><?php echo $APNE;?></td>
+                    <td><?php $PAPNE=round($APNE*100/$N,2); echo $PAPNE;?></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Actividad gerencial</td>
+                    <td><?php echo $AG;?></td>
+                    <td><?php $PAG=round($AG*100/$N,2); echo $PAG;?></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Desocupado</td>
+                    <td><?php echo $D;?></td>
+                    <td><?php $PD=round($D*100/$N,2); echo $PD;?></td>
+                </tr>    
+                <tr>
+                    <td colspan="2"><center>Total</center></td>
+                    <td><?php echo $N;?></td>
+                    <td></td>
+                </tr>   
+            </tbody>
+</table>
+</div>    

@@ -1,0 +1,63 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+class model_carrera extends CI_Model {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->database();
+        
+    }
+
+    public function crearCarrera($data){
+     	/*Nos aseguramos si realizamos todo o no*/
+        $this->db->trans_start();
+     	$this->db->insert('carrera',$data);
+        $this->db->trans_complete();	
+     }
+     
+     public function listarCarrera(){
+	$this->db->order_by('id ASC');
+	return $this->db->get('carrera')->result();
+     }
+
+     function editCarrera($data,$id){
+	$this->db->where('id',$id);
+	$this->db->update('carrera',$data);
+		
+     }
+     function elimiCarrera($id){
+	$this->db->where('id',$id);
+	$this->db->delete('carrera');
+		
+	}
+      function buscarID($id){
+		$query = $this->db->where('id',$id);
+		$query = $this->db->get('carrera');
+		return $query->result();
+		
+	}
+        
+     public function consultaCarrera(){
+	$this->db->order_by('id ASC');
+	return $this->db->get('carrera')->result();
+     }
+     public function getUsuarioCarrera()
+       {
+             $query=$this->db
+                     ->select("c.ID as ID_CARRERA, c.NOMBRE, u.APELLIDOS, u.ID as ID_USUARIO, u.FECHA_EGRESO")    
+                     ->from("carrera as c")
+                     ->join("usuarios as u", "c.ID = u.ID_CARRERA","inner")
+                     ->get();
+             return $query->result();
+       }
+       
+       public function getUsuarioEncuesta()
+       {
+             $query=$this->db
+                     ->select("c.ID as ID_CARRERA, c.NOMBRE, u.APELLIDOS, u.ID as ID_USUARIO, u.FECHA_EGRESO, e.ID_USUARIO as ID_USUARIOE ")    
+                     ->from("carrera as c")
+                     ->join("usuarios as u", "c.ID = u.ID_CARRERA","inner")
+                     ->join("encuesta as e", "u.ID = e.ID_USUARIO","inner")
+                     ->get();
+             return $query->result();
+       }
+}

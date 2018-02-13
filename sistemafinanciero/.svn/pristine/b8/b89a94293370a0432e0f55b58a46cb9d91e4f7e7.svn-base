@@ -1,0 +1,133 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+date_default_timezone_set('America/Lima'); 
+class encuesta extends CI_Controller{
+
+	public function __construct(){
+          parent::__construct();
+          $this->load->database();
+          $this->load->model('model_encuesta');
+          $this->load->model('model_carrera');
+          $this->load->model('model_usuarios');
+          $this->load->model('model_seguridad');
+          $this->load->library('javascript');
+
+          //Cargamos el modelo deel controlador
+          
+    }
+    function Seguridad()
+     {
+     	$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+         $this->model_seguridad->SessionActivo($url);
+     }
+    function insertarEncuesta(){
+        $this->Seguridad();
+        $this->validaCampos();
+        if($this->form_validation->run() == TRUE)
+                {
+                        $data= array(
+                                'ACTIVIDAD_LABORAL'=>$this->input->post('myradio1'),
+                                'GRADO_FORMACION'=>$this->input->post('myradio2'),
+                                'METODO_DOCENTE'=>$this->input->post('myradio3'),
+                                'ACTIVIDAD_ACADEMICA'=>$this->input->post('myradio4'),
+                                'GRADO_TRABAJO'=>$this->input->post('myradio5'),
+                                'JUSTIFICACION'=>$this->input->post('justificacion'),
+                                'CORREO_ELECTRONICO'=>$this->input->post('correoelectronico'),
+
+                                'ID_USUARIO'=>$this->session->userdata('ID'),
+                                'FECHA_ENCUESTA'=>$this->input->post('fecha_encuesta'),
+                            );
+                            $this->model_encuesta->guardarEncuesta($data);
+                             redirect("encuesta/listadoEncuesta?save=true");
+			
+		}else
+                {
+                      $this->load->view('header');
+                      $datos["data"] = $this->model_carrera->getUsuarioCarrera();        
+                      $this->load->view('view_usuarios_encuesta', $datos);
+                      $this->load->view('footer');
+		} 
+
+    }
+    function validaCampos()
+    {
+		/*Campos para validar que no esten vacio los campos*/
+                 $this->form_validation->set_rules('myradio1', 'ACTIVIDAD_LABORAL', 'trim|required');  
+		 $this->form_validation->set_rules('myradio2', 'GRADO_FORMACION', 'trim|required');
+		 $this->form_validation->set_rules('myradio3', 'METODO_DOCENTE', 'trim|required');
+		 $this->form_validation->set_rules('myradio4', 'ACTIVIDAD_ACADEMICA', 'trim|required');
+		 $this->form_validation->set_rules('myradio5', 'GRADO_TRABAJO', 'trim|required');
+                 $this->form_validation->set_rules('justificacion', 'JUSTIFICACION', 'trim|required');
+                 $this->form_validation->set_rules('correoelectronico', 'Email', 'trim|required|valid_email');
+    }
+   
+  
+    
+    function listadoEncuesta(){
+          $this->Seguridad();
+          $this->load->view('header');
+          $data['encuesta'] = $this->model_encuesta->listarEncuesta();         
+          $this->load->view('view_listado_encuesta', $data);
+          $this->load->view('footer');
+    }
+    
+    function reporteGenero(){
+          $this->Seguridad();
+          $this->load->view('header');
+          $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+          $this->load->view('view_reporte_genero', $dato);
+          $this->load->view('view_reporte_genero_grafico', $dato);
+          $this->load->view('footer');    
+    }
+    
+     function reporteRespuesta(){
+         $this->Seguridad();
+          $this->load->view('header');
+          $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+          $this->load->view('view_reporte_respuesta', $dato);
+          $this->load->view('footer');    
+    }
+    
+    function reportePreguntaUno(){
+          $this->Seguridad();
+          $this->load->view('header');
+          $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+          $this->load->view('view_reporte_preguntaUno', $dato);
+          $this->load->view('view_reporte_uno', $dato);
+          $this->load->view('footer');    
+    }
+    function reportePreguntaDos(){
+        $this->Seguridad();
+          $this->load->view('header');
+          $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+          $this->load->view('view_reporte_preguntaDos', $dato);
+          $this->load->view('view_reporte_dos', $dato);
+          $this->load->view('footer');    
+    }
+    
+     function reportePreguntaTres(){
+          $this->load->view('header');
+          $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+          $this->load->view('view_reporte_preguntaTres', $dato);
+          $this->load->view('view_reporte_tres', $dato);
+          $this->load->view('footer');    
+    }
+    
+    function reportePreguntaCuatro(){
+          $this->Seguridad();
+          $this->load->view('header');
+          $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+          $this->load->view('view_reporte_preguntaCuatro', $dato);
+          $this->load->view('view_reporte_cuatro', $dato);
+          $this->load->view('footer');    
+    }
+    
+    function reportePreguntaCinco(){
+          $this->Seguridad();
+          $this->load->view('header');
+          $dato['datos'] = $this->model_usuarios->getCantidadGenero();  
+          $this->load->view('view_reporte_preguntaCinco', $dato);
+          $this->load->view('view_reporte_cinco', $dato);
+          $this->load->view('footer');    
+    }
+
+}

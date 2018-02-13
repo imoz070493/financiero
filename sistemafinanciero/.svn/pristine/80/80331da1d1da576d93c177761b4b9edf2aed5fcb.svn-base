@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Ejemplos de gr&#225;ficos usando Chart.js</title>
+<meta name ="author" content ="Norfi Carrodeguas">
+</head>
+
+<center><h1 >GRAFICAMENTE</h1></center>
+<br>
+<script src="<?php echo base_url();?>js/Chart.js"></script>
+<script src="<?php echo base_url();?>js/jquery-1.11.3.js"></script>
+<script src="<?php echo base_url();?>js/jquery-1.11.3.min.js"></script>
+
+<div id="canvas-holder">
+	<table align="center" >
+		<tr>
+			<th></th>
+			<th>GRAFICO CIRCULAR</th>
+			<th>GRAFICO DE COLUMNAS</th>
+		</tr>
+		<tr>
+			<td>
+				<canvas height="300px" width="300px" id="micanvas"><br> 
+			</td>
+			<td>
+				<canvas id="chart-area" width="300" height="300"></canvas>
+			</td>
+			<td>
+				<canvas id="chart-area3" width="500" height="500"></canvas>
+			</td>
+		</tr>
+
+	</table>
+
+<canvas id="chart-area2" width="300" height="300"></canvas>
+
+<canvas id="chart-area4" width="800" height="300"></canvas>
+</div>
+
+<body>  	  
+	<?php $APE=0;
+                      $N= count($datos);
+                      $AA=0;
+                      $OA=0;
+                      $APNE=0;
+                      $AG=0;
+                      $D=0;
+                      $I=0;
+                      $N= count($datos);
+                      foreach($datos as $dato)
+                      {
+                        $I=$I+1;
+                        if($dato->ACTIVIDAD_LABORAL=="Actividad profesional especifica"){
+                            $APE=$APE+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Actividad academica"){
+                            $AA=$AA+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Otra actividad"){
+                            $OA=$OA+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Actividad profesional no especifica"){
+                            $APNE=$APNE+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Actividad gerencial"){
+                            $AG=$AG+1;
+                        }
+                        if($dato->ACTIVIDAD_LABORAL=="Desocupado"){
+                            $D=$D+1;
+                        }
+                      }
+                      
+                      $valores=array($APE, $AA, $OA, $APNE, $AG, $D);
+                      $valoresPorcentaje =array(round($APE*100/$N,2), round($AA*100/$N,2), round($OA*100/$N,2), round($APNE*100/$N,2), round($AG*100/$N,2), round($D*100/$N,2));
+                      
+?>
+</body>
+<script>
+var canvas = document.getElementById("micanvas");
+var ctx = canvas.getContext("2d");
+
+ctx.fillStyle="#0b82e7";
+ctx.fillRect(25,55,15,15);
+
+ctx.fillStyle="#e3e860";
+ctx.fillRect(25,85,15,15);
+
+ctx.fillStyle="#eb5d82";
+ctx.fillRect(25,115,15,15);
+
+ctx.fillStyle="#5ae85a";
+ctx.fillRect(25,145,15,15);
+
+ctx.fillStyle="#e965db";
+ctx.fillRect(25,175,15,15);
+
+ctx.fillStyle="#000";
+ctx.fillRect(25,205,15,15);
+
+ctx.font="30px Georgia";
+ctx.fillStyle="blue";
+ctx.fillText("LEYENDA",70,30);
+
+ctx.font="15px Georgia";
+ctx.fillText("Actividad Profesional Especifica",45,70);
+
+ctx.font="15px Georgia";
+ctx.fillText("Actividad Academica",45,100);
+
+ctx.font="15px Georgia";
+ctx.fillText("Otra Actividad",45,130);
+
+ctx.font="15px Georgia";
+ctx.fillText("Actividad Profesional No Especifica",45,160);
+
+ctx.font="15px Georgia";
+ctx.fillText("Actividad Gerencial",45,190);
+
+ctx.font="15px Georgia";
+ctx.fillText("Desocupado",45,220);
+
+var arrayJS= <?php echo json_encode($valores);?>;
+var arrayJSPorcentaje= <?php echo json_encode($valoresPorcentaje);?>;
+
+var pieData = [	{	value: arrayJSPorcentaje[0],
+					color:"#0b82e7",
+					highlight: "#0c62ab",
+					label: "Act. Profesional Especifica"
+				},
+				{
+					value: arrayJSPorcentaje[1],
+					color: "#e3e860",
+					highlight: "#a9ad47",
+					label: "Act. Academica"
+				},
+				{
+					value: arrayJSPorcentaje[2],
+					color: "#eb5d82",
+					highlight: "#b74865",
+					label: "Otra Actividad"
+				},
+				{
+					value: arrayJSPorcentaje[3],
+					color: "#5ae85a",
+					highlight: "#42a642",
+					label: "Act. Profesional No Especifica"
+				},
+				{
+					value: arrayJSPorcentaje[4],
+					color: "#e965db",
+					highlight: "#a6429b",
+					label: "Act. Gerencial"
+				},
+				{
+					value: arrayJSPorcentaje[5],
+					color: "#000",
+					highlight: "#011",
+					label: "Desocupado"
+				}
+			];
+
+	var barChartData = {
+		labels : ["Act. Profesional Especifica", "Act. Academica", "Otra Actividad", "Act. Profesional No Especifica","Act. Gerencial","Desocupado"],
+		datasets : [
+			{
+				fillColor : "#6b9dfa",
+				strokeColor : "#ffffff",
+				highlightFill: "#1864f2",
+				highlightStroke: "#ffffff",
+				data : [arrayJS[0],arrayJS[1],arrayJS[2],arrayJS[3],arrayJS[4],arrayJS[5]]
+			}
+		]
+
+	}	
+
+	
+var ctx = document.getElementById("chart-area").getContext("2d");
+var ctx2 = document.getElementById("chart-area2").getContext("2d");
+var ctx3 = document.getElementById("chart-area3").getContext("2d");
+var ctx4 = document.getElementById("chart-area4").getContext("2d");
+
+window.myPie = new Chart(ctx).Pie(pieData);	
+//window.myPie = new Chart(ctx2).Doughnut(pieData);				
+window.myPie = new Chart(ctx3).Bar(barChartData);
+//window.myPie = new Chart(ctx4).Line(lineChartData, {responsive:true});
+</script>
+</html>

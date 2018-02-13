@@ -1,0 +1,33 @@
+
+
+<div id="container">
+
+<center>
+<table border=0 align="center" class="ventanas" width="900" cellspacing="0" cellpadding="0">
+  
+<thead>
+    <tr>
+        <td height='10' class='tabla_ventanas_login' height='10' colspan='3'><legend align='center'>
+<?php        
+if(isset($_GET['save']))
+{
+    echo '<div class="alert alert-success text-center"><h2>La encuesta se realizo exitosamente</h2></div>';
+}
+?>
+            
+</legend></td>
+  </tr>
+</thead>
+<tbody>
+    
+ <?php if ($this->session->userdata('is_logged_in')){
+			echo '<tr><td colspan=2>Estimado egresado: <strong>'.$this->session->userdata('NOMBRE').' '.$this->session->userdata('APELLIDOS').'</strong> se agradece su participación</td></tr>';
+                       
+			echo '<tr>';
+                        echo '<td><br><center>'.anchor("login/CerrarSesion/", "Salir del Sistema").'</td></center></tr>';
+ }
+?>
+</tbody>
+</table>
+</center>
+</div>

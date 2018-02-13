@@ -1,0 +1,120 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+date_default_timezone_set('America/Lima'); 
+class carrera extends CI_Controller{
+
+	public function __construct(){
+          parent::__construct();
+          $this->load->helper('form');
+          $this->load->model('model_seguridad');
+          $this->load->model('model_carrera');
+          //Cargamos el modelo deel controlador
+          
+    }
+    function Seguridad(){
+     	$url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+         $this->model_seguridad->SessionActivo($url);
+     }
+     
+  
+    function nuevo(){
+        $this->Seguridad();
+    	$this->load->view('header');
+        $this->load->view('view_nuevo_carrera');
+        $this->load->view('footer');
+    }
+    
+    function insertarDatos(){
+        $this->Seguridad();
+        $data= array(
+            'nombre'=>$this->input->post('nombre'),
+        );
+        $this->load->view('header');
+        $this->model_carrera->crearCarrera($data);
+        $this->load->view('footer');
+        redirect("carrera/listadoCarrera");
+        
+    }
+    
+      function listadoCarrera(){
+          $this->Seguridad();
+          $this->load->view('header');
+          $data['carrera'] = $this->model_carrera->listarCarrera();         
+          $this->load->view('view_listado_carrera', $data);
+          $this->load->view('footer');
+    }
+    	 public function editarCarrera($id = NULL){
+             $this->Seguridad();
+		
+		if ($id == NULL OR !is_numeric($id)){
+			$data['Modulo']  = "carrera";
+			$data['Error']   = "Error: El ID <strong>".$id."</strong> No es Valido, Verifica tu Busqueda !!!!!!!";
+			$this->load->view('header');
+			$this->load->view('view_errors',$data);
+			$this->load->view('footer');
+			return;
+		}
+		if ($this->input->post()) {
+			
+			$this->ValidaCampos();
+				
+			if ($this->form_validation->run() == TRUE){
+				$datos_update = $this->input->post();
+				$id_insertado = $this->model_carrera->editCarrera($datos_update,$id);
+				redirect('carrera?update=true');
+				
+			}else{
+				$this->Nuevo();
+			}
+			
+		}else{
+			$data['datos_carrera'] = $this->model_carrera->buscarID($id);
+			if (empty($data['datos_carrera'])){
+				$data['Modulo']  = "Usuarios";
+				$data['Error']   = "Error: El ID <strong>".$id."</strong> No es Valido, Verifica tu Busqueda !!!!!!!";
+				$this->load->view('header');
+				$this->load->view('view_errors',$data);
+				$this->load->view('footer');
+			}else{
+				$this->load->view('header');
+				$this->load->view('view_nuevo_carrera',$data);
+				$this->load->view('footer');
+			}
+		}
+		
+	}
+        
+	public function eliminarCarrera($id = NULL){
+            $this->Seguridad();
+		if ($id == NULL OR !is_numeric($id)){
+			$data['Modulo']  = "Usuarios";
+			$data['Error']   = "Error: El ID <strong>".$id."</strong> No es Valido, Verifica tu Busqueda !!!!!!!";
+			$this->load->view('header');
+			$this->load->view('view_errors',$data);
+			$this->load->view('footer');
+			return;
+		}
+		if ($this->input->post()) {
+			$id_eliminar = $this->input->post('id');
+			$boton       = strtoupper($this->input->post('btn_guardar'));
+			if($boton=="NO"){
+				redirect("carrera/listadoCarrera");
+			}else{
+                                $this->model_carrera->elimiCarrera($id_eliminar);
+				redirect("carrera/listadoCarrera");
+			}
+		}else{
+			$data['datos_carrera'] = $this->model_carrera->buscarID($id);
+			if (empty($data['datos_carrera'])){
+				$data['Modulo']  = "Usuarios";
+				$data['Error']   = "Error: El ID <strong>".$id."</strong> No es Valido, Verifica tu Busqueda !!!!!!!";
+				$this->load->view('header');
+				$this->load->view('view_errors',$data);
+				$this->load->view('footer');
+			}else{
+				$this->load->view('header');
+				$this->load->view('view_eliminar_carrera',$data);
+				$this->load->view('footer');
+			}
+		}
+	}
+}

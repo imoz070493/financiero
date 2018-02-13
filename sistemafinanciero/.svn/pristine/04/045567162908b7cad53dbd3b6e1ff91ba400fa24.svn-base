@@ -1,0 +1,39 @@
+<html>
+    <body>
+    <?php echo form_open( "carrera/editarCarrera/".@$datos_carrera[0]->id) ?>
+    <center>
+    <table align="center" border=0 class="ventanas" width="650" cellspacing="0" cellpadding="0">
+    <tr>
+        <td height='10' class='tabla_ventanas_login' height='10' colspan='2'><legend align='center'>.: Editar Carrera:.</legend></td>
+    </tr>
+    <?php
+     $nombre= array(
+         'name'=>'nombre',
+         'value' => set_value('nombre',@$datos_carrera[0]->nombre),
+         'placeholder'=>'Escribe tu nombre',
+     );
+     $universidad= array(
+         'name'=>'universidad',
+         'value' => set_value('universidad',@$datos_carrera[0]->universidad),
+         'placeholder'=>'Escribe tu universidad',
+     );
+    ?>
+    <tr align="center">
+        <td><?php echo form_label('Nombre:','nombre'); ?></td>
+        <td><?php echo form_input($nombre); ?></td>
+    </tr>
+        
+    <tr align="center">    
+        <td><?php echo form_label('Universidad:','universidad'); ?></td>
+       <td><?php echo form_input($universidad); ?></td>
+    </tr>
+    <tr align="center">
+        <td colspan='2'><?php  echo form_submit('','Ingresar Carrera');?></td>
+    </tr>    
+    </center>
+       </table>
+
+    <?php echo form_close()?>
+        
+</body>
+</html>

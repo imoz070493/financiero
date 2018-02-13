@@ -1,0 +1,78 @@
+<script>
+                function generar_reporte_excel(){
+                document.getElementById("frmExcel").submit();
+                }
+                function generar_reporte_word(){
+                document.getElementById("frmWord").submit();
+                }
+</script>
+<br><br>
+<div border=0 class="ventanas" width="650" cellspacing="0" cellpadding="0">
+<table id="encuesta" border="0" cellpadding="0" cellspacing="0" class="pretty">
+
+            <thead>
+                <tr>
+                    <td  class='tabla_ventanas_login' height='10' colspan='4'><legend align='center'>2. ¿Cómo considera los conocimientos y competencias adquiridos en su formación de grado con respecto en relación con su desempeño profesional?</legend></td>
+                </tr>
+                <tr>
+                    <td><a href="<?php echo base_url();?>index.php/exportar/toExcel_preguntaDos" onclick="generar_reporte_excel();" class="btn btn-success" title="Exportar a Excel" >Exportar a Excel</a></td>
+                    <td><a href="<?php echo base_url();?>index.php/exportar/toWord_preguntaDos" onclick="generar_reporte_word();" class="btn btn-primary" title="Exportar a Word" >Exportar a Word</a></td>
+                    <td></td>
+                    <td></td>
+                 </tr>
+                <tr>
+                    <th>N°</th>
+                    <th>RESPUESTAS MARCADAS</th>
+                    <th>CANTIDAD</th>
+                    <th>PONCENTAJE</th>
+                </tr>
+            </thead>
+<?php
+if(!empty($datos)){
+                      $I=0;
+                      $S=0;
+                      $MS=0;
+                      $IS=0;
+                      $N=count($datos);
+                      foreach($datos as $dato)
+                      {
+                        $I=$I+1;
+                        if($dato->GRADO_FORMACION=="Suficiente"){
+                            $S=$S+1;
+                        }
+                        if($dato->GRADO_FORMACION=="Medianamente Suficiente"){
+                            $MS=$MS+1;
+                        }
+                        if($dato->GRADO_FORMACION=="Insuficiente"){
+                            $IS=$IS+1;
+                        }
+                      } 
+               }
+            ?>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Suficiente</td>
+                    <td><?php echo $S;?></td>
+                    <td><?php $PS=round($S*100/$N,2); echo $PS;?></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Medianamente Suficiente</td>
+                    <td><?php echo $MS;?></td>
+                    <td><?php $PMS=round($MS*100/$N,2); echo $PMS;?></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Insuficiente</td>
+                    <td><?php echo $IS;?></td>
+                    <td><?php $PIS=round($IS*100/$N,2); echo $PIS;?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><center>TOTAL</center></td>
+                    <td><?php echo $N;?></td>
+                    <td></td>
+                </tr>
+            </tbody>
+</table>
+</div>

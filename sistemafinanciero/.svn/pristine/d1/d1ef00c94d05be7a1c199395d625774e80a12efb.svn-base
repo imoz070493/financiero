@@ -1,0 +1,356 @@
+
+<script type="text/javascript">
+            /*CLIENTES*/
+            $(document).ready(function() {
+                $('#carrera').dataTable( {
+                    // sDom: hace un espacio entre la tabla y los controles 
+                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+        
+                } );
+            } );
+</script>
+<?php echo form_open("encuesta/insertarEncuesta"); 
+
+    $año_egreso = array(
+		'name'        => 'anioegreso',
+		'size'        => 50,
+		'type'        => 'date',
+		);
+    $pregunta1 	  = array(array(
+		'name'        => 'myradio1',
+		'size'        => 50,
+		'value'		  => 'Actividad profesional especifica',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio1',
+		'size'        => 50,
+		'value'		  => 'Actividad academica',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio1',
+		'size'        => 50,
+		'value'		  => 'Otra actividad',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio1',
+		'size'        => 50,
+		'value'		  => 'Actividad profesional no especifica',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio1',
+		'size'        => 50,
+		'value'		  => 'Actividad gerencial',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio1',
+		'size'        => 50,
+		'value'		  => 'Desocupado',
+		'type'        => 'radio',
+		));
+    
+    
+    $pregunta2 	  = array(array(
+		'name'        => 'myradio2',
+		'size'        => 50,
+		'value'		  => 'Suficiente',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio2',
+		'size'        => 50,
+		'value'		  => 'Medianamente Suficiente',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio2',
+		'size'        => 50,
+		'value'		  => 'Insuficiente',
+		'type'        => 'radio',
+		));
+    
+    $pregunta3 	  = array(array(
+		'name'        => 'myradio3',
+		'size'        => 50,
+		'value'		  => 'SI',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio3',
+		'size'        => 50,
+		'value'		  => 'NO',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio3',
+		'size'        => 50,
+		'value'		  => 'NS/NC',
+		'type'        => 'radio',
+		));
+
+    $pregunta4 	  = array(array(
+		'name'        => 'myradio4',
+		'size'        => 50,
+		'value'		  => 'SI',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio4',
+		'size'        => 50,
+		'value'		  => 'NO',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio4',
+		'size'        => 50,
+		'value'		  => 'NS/NC',
+		'type'        => 'radio',
+		));
+    
+    $pregunta5 	  = array(array(
+		'name'        => 'myradio5',
+		'size'        => 50,
+		'value'		  => 'SI',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio5',
+		'size'        => 50,
+		'value'		  => 'NO',
+		'type'        => 'radio',
+		),array(
+		'name'        => 'myradio5',
+		'size'        => 50,
+		'value'		  => 'NS/NC',
+		'type'        => 'radio',
+		));
+    
+    $justificacion 	  = array(
+		'name'        => 'justificacion',
+                'cols'        => 200,
+                'rows'        => 6,
+		'type'        => 'textarea',
+                'style'       => 'width:60%',
+                'placeholder' => 'Ecribe..',
+		);
+    $correoelectronico 	  = array(
+		'name'        => 'correoelectronico',
+		'size'        => 50,
+		'type'        => 'text',
+                'placeholder' => 'Ingrese su email',
+		);			
+?>
+
+        <?php 
+        $ce=0;
+        $cne=0;
+        $id_usuario=$this->session->userdata('ID');
+        foreach ($dato as  $b){
+             $c= $b->ID_USUARIOE;
+             if( $c == $id_usuario){
+                  $ce= $ce+1;
+             }     
+         }
+         
+         foreach ($data as  $a){
+             $b= $a->ID_USUARIO;
+             if( $b == $id_usuario){
+                  $id= $a->ID_USUARIO;
+                  $carrera= $a->NOMBRE.'<br>';
+                  $fecha= $a->FECHA_EGRESO;
+             }
+             else{    
+             }     
+         }
+        ?>
+<?php if($ce==0){ ?>
+<center>    
+<table border=0 align="center" class="ventanas" width="900" cellspacing="0" cellpadding="0">
+  
+<thead>
+    <tr>
+     <td height='10' class='tabla_ventanas_login' height='10' colspan='3'><legend align='center'>.: LLENAR LA ENCUESTA:.</legend></td>
+  </tr>
+</thead>
+  <tbody>  
+        <tr>
+            <th><h4>Carrera Profesional:</h4></th>
+            <th><h4>Fecha de Egreso:</h4></th>
+            <th></th>
+        </tr>
+        
+        <tr>
+        <th>
+            <select name="id_usuario">
+                <?php echo '<option value="'.$id.'">'.$carrera.'</option>';?>
+
+            </select>
+        </th>  
+        <th>
+           <select name="fecha" colspan="2">
+               <?php if(!empty($fecha)){ 
+                    echo '<option value="">'.$fecha.'</option>';
+               }?>
+             </select> 	
+         </th>
+    </tr>
+<tr>
+	<th align="left"  colspan="3">
+            <h4>1. Señalar que actividad laboral realiza actualmente:</h4>
+	</th>
+</tr>
+
+<tr>
+	<td width="400">
+            <?php echo  form_input($pregunta1[0])."Actividad profesional especifica";?> 
+	</td>
+        
+	<td width="300">
+            <?php echo form_input($pregunta1[1])."Actividad academica";?>
+	</td>
+        
+	<td width="200">
+            <?php  echo form_input($pregunta1[2])."Otra actividad";?>
+	</td>
+</tr>
+
+<tr>     
+    
+	<td>
+            <?php echo form_input($pregunta1[3])."Actividad profesional no especifica";?>
+	</td>
+        
+	<td><?php echo form_input($pregunta1[4])."Actividad gerencial";?>
+	</td>
+        
+	<td><?php echo form_input($pregunta1[5])."Desocupado";?>
+	</td>
+</tr>
+<tr>
+
+<tr>
+	<td align="left" colspan="3">
+            <br>
+            <h4>2. ¿Como considera los conocimientos y competencias adquiridos en su formacion de grado con respecto en relacion
+            con su desempeño profesional?</h4>
+	</td>
+</tr>
+
+<tr>
+	<td>
+            <?php echo form_input($pregunta2[0])."Suficiente";?>
+	</td>
+        
+	<td>
+            <?php echo form_input($pregunta2[1])."Medianamente Suficiente";?>
+	</td>
+	<td>
+            <?php echo form_input($pregunta2[2])."Insuficiente";?>	
+	</td>
+</tr>
+
+<tr>
+        <td align="left" colspan="3">
+            <br>
+            <h4>3. ¿Estima que los conocimientos, las aptitudes pedagogicas y la metodologia empleada por los docentes
+            con los que curso la carrera fueron suficientes y adecuados?</h4>
+	</td>
+</tr>
+
+<tr>
+	<td>
+            <?php echo form_input($pregunta3[0])."SI";?>
+	</td>
+	<td>
+            <?php echo form_input($pregunta3[1])."NO";?>
+	</td>
+	<td>
+            <?php echo form_input($pregunta3[2])."NS/NC";?>
+	</td>
+</tr>
+
+<tr>
+        <th align="left" colspan="3">
+            <br>
+            <h4>4. ¿Habitualmente se le informa sobre las actividades de perfeccionamiento, de actualizacion de conocimientos 
+            y capacitacion que organiza la unidad academica en la que se graduo?</h4>
+	</th>
+</tr>
+
+<tr>
+	<td>
+            <?php echo form_input($pregunta4[0])."SI";?>
+	</td>
+	<td>
+            <?php echo form_input($pregunta4[1])."NO";?>
+	</td>
+	<td>
+            <?php echo form_input($pregunta4[2])."NS/NC";?>
+	</td>
+</tr>
+
+<tr>
+	<th align="left" colspan="3">
+            <br>
+            <h4>5. ¿Considera los conocimientos con los que concluyo la carrera de grado le facilitaron encontrar trabajo?</h4>
+	</th>
+</tr>
+
+<tr>
+	<td>
+            <?php echo form_input($pregunta5[0])."SI";?>
+	</td>
+	<td>
+            <?php echo form_input($pregunta5[1])."NO";?>
+	</td>
+	<td>
+            <?php echo form_input($pregunta5[2])."NS/NC";?>	
+	</td>
+</tr>
+
+<tr>
+        <th align="left" colspan="3">
+            <br>
+            <h4>¿Por qué?</h4>
+	</th>
+</tr>
+
+<tr>
+	<td colspan="2">
+            <?php echo form_textarea($justificacion);?>
+	</td>
+        <td></td>
+</tr>
+
+<tr>
+	<th align="left" colspan="3">
+                <h4>Cuenta de correo electronico (para recibir novedades):</h4>     
+	</th>
+</tr>
+
+<tr>
+	<td>
+            <?php echo form_input($correoelectronico);?>
+	</td>
+        <td></td>
+        <td></td>
+</tr>
+        <?php 
+        $fechaEncuesta    = date("Y")."-".date("m")."-".date("d")." ".date("H:i:s");//CAPTURA LA FECHA ACTUAL
+        ?>
+        <input type="hidden" name="fecha_encuesta" value="<?php echo $fechaEncuesta;  ?>" />
+
+<tr>
+    <th> <input type="submit" class="btn btn-success" value="Guardar"></th>
+    <th> <input type="submit" class="btn btn-success" value="Limpiar"></th>
+    <th></th>
+</tr>
+
+<?php echo form_close(); ?>
+
+</tbody>
+</table>
+</center>
+<?php }
+else {
+     if ($this->session->userdata('is_logged_in')){
+                        echo '<br><br>';
+			echo '<center><tr><h1>Estimado egresado: <strong>'.$this->session->userdata('NOMBRE').' '.$this->session->userdata('APELLIDOS').'</h1> se agradece su participación,</td></tr>';
+                        echo '<td> usted ya se realizo la encuesta</td>';
+			echo '<tr></center>';
+                        echo '<td><br><center>'.anchor("login/CerrarSesion/", "Salir del Sistema").'</td></center></tr>';
+ }
+}
+?>

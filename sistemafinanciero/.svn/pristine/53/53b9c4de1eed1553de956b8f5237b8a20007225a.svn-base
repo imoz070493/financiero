@@ -1,0 +1,74 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php
+    $tipo = isset($_REQUEST['t']) ? $_REQUEST['t'] : 'excel';
+    $extension = $tipo == 'excel' ? '.xls' : '.doc';
+
+header("Content-type: application/vnd.ms-$tipo");
+header("Content-Disposition: attachment; filename=mi_archivo$extension");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+?>
+
+<div border="1" class="ventanas" width="650" cellspacing="0" cellpadding="0">
+<table  border="1" cellpadding="0" cellspacing="0" class="pretty">
+            <thead>
+                <tr>
+                    <td  class='tabla_ventanas_login' height='10' colspan='4'><h3>5. ¿Considera los conocimientos con los que concluyo la carrera de grado le facilitaron encontrar trabajo?</h3></td>
+                </tr>
+                <tr>
+                    <th style="background-color:lightskyblue;">N°</th>
+                    <th style="background-color:lightskyblue;">RESPUESTAS MARCADAS</th>
+                    <th style="background-color:lightskyblue;">CANTIDAD</th>
+                    <th style="background-color:lightskyblue;">PORCENTAJE</th>
+                </tr>
+            </thead>
+<?php
+if(!empty($datos)){
+                      $I=0;
+                      $SI=0;
+                      $NO=0;
+                      $NS=0;
+                      $N=count($datos);
+                      foreach($datos as $dato)
+                      {
+                        $I=$I+1;
+                        if($dato->GRADO_TRABAJO=="SI"){
+                            $SI=$SI+1;
+                        }
+                        if($dato->GRADO_TRABAJO=="NO"){
+                            $NO=$NO+1;
+                        }
+                        if($dato->GRADO_TRABAJO=="NS/NC"){
+                            $NS=$NS+1;
+                        }
+                      } 
+               }
+            ?>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>SI</td>
+                    <td><?php echo $SI;?></td>
+                    <td><?php $PSI=round($SI*100/$N,2); echo $PSI;?></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>NO</td>
+                    <td><?php echo $NO;?></td>
+                    <td><?php $PNO=round($NO*100/$N,2); echo $PNO;?></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>NS/NC</td>
+                    <td><?php echo $NS;?></td>
+                    <td><?php $PNS=round($NS*100/$N,2); echo $PNS;?></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><center>TOTAL</center></td>
+                    <td><?php echo $N;?></td>
+                    <td></td>
+                </tr>
+            </tbody>      
+</table>
+</div>    

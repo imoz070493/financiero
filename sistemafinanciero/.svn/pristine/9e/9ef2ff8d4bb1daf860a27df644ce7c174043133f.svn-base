@@ -1,0 +1,62 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php
+    $tipo = isset($_REQUEST['t']) ? $_REQUEST['t'] : '.doc';
+    $extension = $tipo == 'excel' ? '.xls' : '.doc';
+
+header("Content-type: application/vnd.ms-$tipo");
+header("Content-Disposition: attachment; filename=mi_archivo$extension");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+?>
+
+<div border="1" class="ventanas" width="650" cellspacing="0" cellpadding="0">
+<center>
+  <table border="1" cellpadding="0" cellspacing="0" class="pretty">
+            <thead>
+                <tr>
+                    <td colspan="10"><center><h3>Reporte de Encuestas</h3></center></td>
+                </tr>
+                <tr>
+                    <th style="background-color:lightskyblue;">N°</th>
+                    <th style="background-color:lightskyblue;">Egresado</th>
+                    <th style="background-color:lightskyblue;">Carrera Profesional</th>
+                    <th style="background-color:lightskyblue;">Actividad Laboral Actual</th>
+                    <th style="background-color:lightskyblue;">¿Como considera conocimientos y competencias adquiridos en su formacion de grado con respecto en relacion con su desempeño profesional?</th>
+                    <th style="background-color:lightskyblue;">¿Estima que los conocimientos, las aptitudes pedagogicas y la metodologia empleada por los docentes con los que curso la carrera fueron suficientes y adecuados?</th>
+                    <th style="background-color:lightskyblue;">¿Habitualmente se le informa sobre las actividades de perfeccionamiento, de actualizacion de conocimientos y capacitacion que organiza la unidad academica en la que se graduo?</th>
+                    <th style="background-color:lightskyblue;">¿Considera los conocimientos con los que concluyo la carrera de grado le facilitaron encontrar trabajo?</th>
+                    <th style="background-color:lightskyblue;">¿Por qué?</th>
+                    <th style="background-color:lightskyblue;">Correo Electronico</th>
+                </tr>
+            </thead>
+ 
+            <tbody> 
+               <?php 
+               if(!empty($datos)){
+                      $I=0;
+                      foreach($datos as $dato)
+                      {
+                        $I=$I+1;
+                        echo '<tr>';
+                        echo '<td>'.$I.'</td>';
+                        echo '<td>'.$dato->NOMBRE.' '.$dato->APELLIDOS.'</td>';
+                        echo '<td>'.$dato->NOMBREC.'</td>';
+                        echo '<td>'.$dato->ACTIVIDAD_LABORAL.'</td>';
+                        echo '<td>'.$dato->GRADO_FORMACION.'</td>';
+                        echo '<td>'.$dato->METODO_DOCENTE.'</td>';
+                        echo '<td>'.$dato->ACTIVIDAD_ACADEMICA.'</td>';
+                        echo '<td>'.$dato->GRADO_TRABAJO.'</td>';
+                        echo '<td>'.$dato->JUSTIFICACION.'</td>';
+                        echo '<td>'.$dato->CORREO_ELECTRONICO.'</td>';
+                        echo '</tr>';
+                      } 
+               }
+               ?> 
+            </tbody>
+            
+            
+        </table>    
+    </center>
+</div>    
+

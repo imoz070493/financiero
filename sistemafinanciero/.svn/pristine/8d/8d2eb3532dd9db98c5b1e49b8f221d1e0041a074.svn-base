@@ -1,0 +1,83 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php
+    $tipo = isset($_REQUEST['t']) ? $_REQUEST['t'] : 'excel';
+    $extension = $tipo == 'excel' ? '.xls' : '.doc';
+
+header("Content-type: application/vnd.ms-$tipo");
+header("Content-Disposition: attachment; filename=mi_archivo$extension");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+?>
+
+<div border="1" class="ventanas" width="650" cellspacing="0" cellpadding="0">
+<center>
+        <br>
+        <table  border="1" cellpadding="0" cellspacing="0" class="pretty">
+            <thead>
+                <tr>
+                <td  class='tabla_ventanas_login' height='10' colspan='3'><h3>Reporte de las cantidad de egresados encuestados</h3></td>
+                </tr>
+                <tr>
+                <th style="background-color:lightskyblue;">N°</th>
+                <th style="background-color:lightskyblue;">Cantidad Varones</th>
+                <th style="background-color:lightskyblue;">Cantidad Mujeres</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $CM=0;
+                $CV=0;
+                foreach ($datos as $dato) 
+                {
+                    if($dato->SEXO==0){
+                        $CV=$CV+1;
+                    }
+                    if($dato->SEXO==1){
+                        $CM=$CM+1;
+                    }
+                }
+                 ?>   
+                <tr>
+                <td>1</td>    
+                <td><?php echo $CV; ?></td>
+                <td><?php echo $CM; ?></td>
+                </tr>
+                
+            </tbody>
+        </table> 
+        <br>
+        <table id="usuarios" border="1" cellpadding="0" cellspacing="0" class="pretty">
+            <thead>
+                <tr>
+                <th style="background-color:lightskyblue;">N°</th>
+                <th style="background-color:lightskyblue;">NOMBRES</th>
+                <th style="background-color:lightskyblue;">APELLIDOS</th>
+                <th style="background-color:lightskyblue;">CARRERA</th>
+                <th style="background-color:lightskyblue;">FECHA DE ENCUESTA</th>
+                </tr>
+            </thead>
+  
+            <tbody> 
+               <?php 
+               if(!empty($datos)){
+                      $I=0;
+                      foreach($datos as $usuario)
+                      {
+                        $I=$I+1;
+                        echo '<tr>';
+                        echo '<td>'.$I.'</td>';
+                        echo '<td>'.$usuario->NOMBRE.'</td>';
+                        echo '<td>'.$usuario->APELLIDOS.'</td>';
+                        echo '<td>'.$usuario->NOMBREC.'</td>';
+                        echo '<td>'.$usuario->FECHA_ENCUESTA.'</td>';
+                        echo '</tr>';
+                      } 
+               }
+               ?> 
+            </tbody>
+            
+            
+        </table>  
+    </center>
+</div>    
