@@ -1,7 +1,7 @@
 <script type="text/javascript">
             /*CLIENTES*/
             $(document).ready(function() {
-                $('#usuarios').dataTable( {
+                $('#prestamos').dataTable( {
                     // sDom: hace un espacio entre la tabla y los controles 
                 "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
         
@@ -9,7 +9,7 @@
             } );
 </script>
 <div id="container">
-	<h2 align="center">MÓDULO CLIENTE</h2>
+    <h2 align="center">MÓDULO PRESTAMO</h2>
 <?php
 if(isset($_GET['save']))
 {
@@ -36,39 +36,43 @@ if(isset($_GET['password']))
     echo '<div class="alert alert-success text-center">La Contraseña fue actualizado Correctamente</div>';                
 }
 ?>
-<a href="<?php echo base_url();?>index.php/cliente/nuevo" class="btn btn-success">REGISTRAR NUEVO CLIENTE</a> 
+<a href="<?php echo base_url();?>index.php/prestamo/nuevo" class="btn btn-success">REGISTRAR NUEVO PRESTAMO</a> 
 <br><br>
 <center>  
-<table id="usuarios" border="0" cellpadding="0" cellspacing="0" class="pretty">
+<table id="prestamos" border="0" cellpadding="0" cellspacing="0" class="pretty">
 <thead>
 <tr>
-<th>NOMBRE</th>
-<th>APELLIDOS</th>
-<th>DNI</th>
-<th>TELEFONO</th>
-<th>EMAIL</th>
-<th>DIRECCIÓN</th>
-<th>DISTRITO</th>
-<th>PROVINCIA</th>
+<th>PRODUCTO</th>
+<th>PLAZO</th>
+<th>FECHA INICIO</th>
+<th>FECHA FINAL</th>
+<th>TASA INTERES</th>
+<th>CAPITAL</th>
+<th>DEUDA</th>
+<th>USUARIO</th>
+<th>ESTADO</th>
+<th>CLIENTE</th>
 <th>ACCION</th>
 </tr>
 </thead>
 <tbody>
  <?php 
- if(!empty($arraycliente)){
- 	foreach($arraycliente as $clientes){
- 		echo '<tr>';
- 		echo '<td>'.$clientes->nombres.'</td>';
-		echo '<td>'.$clientes->apellidos.'</td>';
-		echo '<td>'.$clientes->dni.'</td>';
-		echo '<td>'.$clientes->telefono.'</td>';
-                echo '<td>'.$clientes->email.'</td>';
-                echo '<td>'.$clientes->direccion.'</td>';
-                echo '<td>'.$clientes->distrito.'</td>';
-                echo '<td>'.$clientes->provincia.'</td>';
+ if(!empty($arrayprestamos)){
+    foreach($arrayprestamos as $clientes){
+        echo '<tr>';
+        echo '<td>'.$clientes->producto.'</td>';
+        echo '<td>'.$clientes->plazo.'</td>';
+        echo '<td>'.$clientes->fechaInicio.'</td>';
+        echo '<td>'.$clientes->fechaFinal.'</td>';
+                echo '<td>'.$clientes->tasaInteres.'</td>';
+                echo '<td>'.$clientes->capital.'</td>';
+                echo '<td>'.$clientes->deuda.'</td>';
+                echo '<td>'.$clientes->nombreU.'</td>';
+                echo '<td>'.$clientes->estado.'</td>';
+                echo '<td>'.$clientes->nombreC.'</td>';
                 echo '<td></td>';
- 		echo '</tr>';
- 	} 
+        echo '</tr>';
+    } 
  }
  ?>
 </tbody>

@@ -11,19 +11,30 @@
  *
  * @author HP
  */
-class model_cliente extends CI_Model
+class model_prestamo extends CI_Model
 {
-    public function ListarCliente()
+    public function ListarPrestamos1()
     {
-        $this->db->order_by('idCliente ASC');
-        return $this->db->get('cliente')->result();
+        $this->db->order_by('idPrestamo ASC');
+        return $this->db->get('prestamo')->result();
     }
-    public function crearCliente($data){
+    public function ListarPrestamos2()
+    {
+        $this->db->select('producto, plazo, fechaInicio, fechaFinal, tasaInteres, capital, deuda, u.NOMBRE AS nombreU,
+                p.estado,
+                c.nombres as nombreC');
+        $this->db->from('prestamo p');
+        $this->db->join('cliente c','c.idCliente = p.idCliente');
+        $this->db->join('usuarios u','u.ID = p.idUsuario');
+        return $this->db->get()->result();
+    }
+    public function crearPrestamo($data){
      	/*Nos aseguramos si realizamos todo o no*/
         $this->db->trans_start();
-     	$this->db->insert('cliente',$data);
+     	$this->db->insert('prestamo',$data);
         $this->db->trans_complete();	
      }
+     /*
      public function ExisteEmail($email){
         $this->db->from('cliente');
         $this->db->where('email',$email);
@@ -33,6 +44,6 @@ class model_cliente extends CI_Model
         $this->db->from('cliente');
         $this->db->where('dni',$dni);
         return $this->db->count_all_results();
-     }
+     }*/
     
 }
