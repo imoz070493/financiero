@@ -1,10 +1,11 @@
 <?php
                         // Creando los campos del formulario:
                         // Dibujando el campo producto
-                        $js = 'id="shirts"';
+                        $js = 'id="producto"';
 
     
                         $producto = array(
+                        '0'           => 'Seleccione Producto',                            
                         'diario'      => 'Diario',
                         'semanal'     => 'Semanal',
                         'mesCampana'  => 'Mes Campaña',
@@ -13,7 +14,11 @@
                         
                         // Dibujando el campo plazo
                         $plazo = array(
-                        '30'  => '30',
+                        'name'        => 'plazo',
+                        'id'          => 'plazo',
+                        'size'        => 10,
+                        'value'   => set_value('plazo',@$datos_prestamo[0]->PLAZO),
+                        'type'        => 'text',
                         );
                         //Dibujando el campo fechaInicio
                         $fechaInicio       = array(
@@ -87,15 +92,8 @@
                         </td>
 
                         <td><font color="red"><?php echo form_error('producto');?></font></td>
-                        <td><?php echo form_label("Plazo(*)",'plazo');?></td>
-                        <?php if($producto!='diario'){?>    
-                            <td>
-                            <select name="plazo">
-                                 <option value="30">27</option>
-                            </select> 
-                            </td>
-                        <?php } ?>
-                        <!--<td><?php //echo form_dropdown('plazo', $plazo, set_value('plazo',@$datos_prestamo[0]->plazo));?></td>-->
+                        <td><?php echo form_label("Periodo(*)",'plazo');?></td>
+                        <td><?php echo form_input($plazo);?></td>
                         <td><font color="red"><?php echo form_error('plazo');?></font></td>
                     </tr>
 
@@ -177,21 +175,52 @@
 <script type="text/javascript">
 
 
-    $( "#shirts" ).change(function () {
-        var str = "";
-        alert("changes")  
-   
+
+    $("#producto").change(function () {
+        //alert("changes");
+        if($("#producto").val()=='diario' || $("#producto").val()=='semanal'){
+            $( "#plazo" ).prop("disabled", true);    
+            $( "#plazo" ).val("1");
+            var periodo = document.getElementById('plazo').value;
+            $.ajax({
+                data: {"periodo":periodo},
+                url: 'http://localhost:8080/financiero/sistemafinanciero/index.php/prestamo/cadena',
+                type: 'post',
+                success: function(response,status){
+                    //alert("Respueta: "+response+" Estado "+status);
+                    $("#fechaFinal").val(response);
+                }
+
+            })
+              
+        }
+
+        if($("#producto").val()=='mesCampana' || $("#producto").val()=='mensual'){
+            $( "#plazo" ).prop("disabled", false);    
+            $( "#plazo" ).val("");
+        }
     });
 
-
-
-
-    
+   
     $("#capital").focusout(function(e) {
-        var tasaI = document.getElementById('tasaInteres').value;
-        var capital = document.getElementById('capital').value;
-        var deuda = parseFloat(capital*tasaI) + parseFloat(capital);
-        document.getElementById("deuda").value = deuda;
+        /*if($("#capital").val()==''){
+            alert("vacio");
+        }*/
+        if($("#capital").val()!='' &&  $("#tasaInteres").val()!=''){
+            var tasaI = document.getElementById('tasaInteres').value;
+            var capital = document.getElementById('capital').value;
+            var deuda = parseFloat(capital*tasaI) + parseFloat(capital);
+            document.getElementById("deuda").value = deuda;    
+        }        
+    });
+
+    $("#tasaInteres").focusout(function(e) {
+        if($("#capital").val()!='' &&  $("#tasaInteres").val()!=''){
+            var tasaI = document.getElementById('tasaInteres').value;
+            var capital = document.getElementById('capital').value;
+            var deuda = parseFloat(capital*tasaI) + parseFloat(capital);
+            document.getElementById("deuda").value = deuda;    
+        }        
     });
 
 </script>

@@ -113,6 +113,13 @@ class prestamo extends CI_Controller{
         $this->load->view('footer');
         redirect("cliente");
         }
-    */     
+    */   
+
+    public function cadena()  {
+      $var1 = $_POST['periodo'];
+      $hoy = date("Y")."-".(date("m")+$var1)."-".date("d");
+      $date = new DateTime($hoy);
+      echo $date->format('Y-m-d');
+    }
          
 }
